@@ -1,0 +1,30 @@
+{
+  "name": "patrick-1984",
+  "owner": {
+    "name": "patrick-1984",
+    "url": "https://github.com/patrick-1984"
+  },
+  "metadata": {
+    "description": "Claude Code plugins by patrick-1984."
+  },
+  "plugins": [
+    {
+      "name": "web-blink",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/patrick-1984/web-blink.git",
+        "ref": "plugin"
+      },
+      "description": "It takes just a blink to control the web. Web Blink learns how web services and web apps work, then hands them to you as reviewed, ready-to-run actions, so you can automate your work from Claude Code or the command line (web-blink, or just blink).",
+      "homepage": "https://github.com/patrick-1984/web-blink",
+      "category": "productivity",
+      "keywords": [
+        "web",
+        "automation",
+        "mcp",
+        "cli",
+        "integrations"
+      ]
+    }
+  ]
+}
