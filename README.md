@@ -12,13 +12,42 @@ repository and is linked from [`.claude-plugin/marketplace.json`](.claude-plugin
 
 From a shell: `claude plugin marketplace add patrick-1984/marketplace` and
 `claude plugin install web-blink@patrick-1984` (add `--scope project` to enable it for one project only).
-Update later with `claude plugin marketplace update patrick-1984`.
+Update both the catalog and the installed plugin, then restart Claude Code:
+
+```sh
+claude plugin marketplace update patrick-1984
+claude plugin update web-blink@patrick-1984
+```
+
+For Codex, explicitly refresh the catalog and the plugin installation, then restart Codex:
+
+```sh
+codex plugin marketplace upgrade patrick-1984
+codex plugin add web-blink@patrick-1984
+```
+
+“Marketplace already up to date” describes the catalog snapshot. It does not prove the installed plugin
+files or the MCP server loaded in an existing conversation are current. `plugin add` ensures the referenced
+plugin is installed; a host restart reloads its running component. `blink_doctor` reports its loaded version.
 
 ## Plugins
 
 | Plugin | What it does | Source |
 |---|---|---|
-| `web-blink` | It takes just a blink to control the web. Web Blink learns how web services and web apps work, then hands them to you as reviewed, ready-to-run actions, so you can automate your work from Claude Code or the command line (`web-blink`, or just `blink`). | [patrick-1984/web-blink](https://github.com/patrick-1984/web-blink), branch `plugin` (the unpacked latest release) |
+| `web-blink` | It takes just a blink to control the web. Web Blink learns how web services and web apps work, then hands them to you as reviewed, ready-to-run actions, so you can automate your work from Claude Code or the command line (`web-blink`, or just `blink`). | [patrick-1984/web-blink](https://github.com/patrick-1984/web-blink), pinned to a verified release tag in the catalog |
+
+## Release synchronization
+
+The Sync verified Web Blink release workflow checks for published releases every 15 minutes and can be
+dispatched with a release tag during publication. It verifies the ZIP against SHA256SUMS, GitHub's asset
+digest and its per-file build receipt; validates both plugin manifests; and confirms the source tag
+contains every shipped file with identical bytes. It then commits the catalog's exact ref/version and
+`release-lock.json`. Drafts, prereleases, downgrades and known unsafe v0.10.0 are rejected.
+
+The workflow runs in this marketplace repository and writes only here. It uses its own contents-write
+GITHUB_TOKEN and public reads of Web Blink; no cross-repository PAT or new GitHub App secret is required.
+Scheduled runs can be delayed by GitHub, so publication should also dispatch the workflow for an immediate
+sync. A catalog pin makes the release visible; clients should still run both update commands above.
 
 ## Adding a plugin
 
