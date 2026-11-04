@@ -5,7 +5,8 @@
     "url": "https://github.com/patrick-1984"
   },
   "metadata": {
-    "description": "Claude Code plugins by patrick-1984."
+    "description": "Claude Code plugins by patrick-1984.",
+    "version": "0.1.0"
   },
   "plugins": [
     {
