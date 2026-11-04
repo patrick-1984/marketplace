@@ -1,14 +1,11 @@
 import hashlib
-import importlib.util
 import io
 import json
 from pathlib import Path
 import unittest
 import zipfile
 
-spec = importlib.util.spec_from_file_location('sync_release', Path(__file__).resolve().parents[1] / 'scripts/sync_release.py')
-sync = importlib.util.module_from_spec(spec)
-spec.loader.exec_module(sync)
+from scripts import sync_release as sync
 
 
 def fixture(version='0.10.1'):

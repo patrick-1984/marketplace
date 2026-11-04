@@ -12,6 +12,11 @@ import tempfile
 import urllib.request
 import zipfile
 
+if __package__:
+    from .catalog import bump, readme, validate, version as marketplace_version
+else:
+    from catalog import bump, readme, validate, version as marketplace_version
+
 REPOSITORY = 'patrick-1984/web-blink'
 SOURCE = 'https://github.com/' + REPOSITORY + '.git'
 BLOCKED = {'v0.10.0'}  # Unsafe shared-profile restart; never promote it again.
@@ -124,16 +129,33 @@ def sync(root, tag=None):
             if path.is_symlink() or not path.resolve().is_relative_to(checkout.resolve()) or path.read_bytes() != data:
                 raise ValueError('The version tag is incomplete or differs from the published plugin ZIP')
         verified['sourceCommit'] = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=checkout, text=True).strip()
+    return apply_verified(root, verified)
+
+
+def apply_verified(root, verified):
+    """Commit-ready catalog/README/lock changes; repeating a release never bumps it twice."""
     catalog = root / '.claude-plugin/marketplace.json'
     document = json.loads(catalog.read_text(encoding='utf-8'))
-    changed = update_catalog(document, verified)
+    plugin_changed = update_catalog(document, verified)
+    old_version = document.get('metadata', {}).get('version')
+    desired = bump(old_version, 'patch') if old_version and plugin_changed else old_version or '0.1.0'
+    document.setdefault('metadata', {})['version'] = desired
+    validate(document)
     lock = root / 'release-lock.json'
-    expected_lock = {'web-blink': verified}
-    changed = changed or not lock.is_file() or json.loads(lock.read_text()) != expected_lock
+    previous_lock = json.loads(lock.read_text(encoding='utf-8')) if lock.is_file() else {}
+    prior = previous_lock.get('web-blink')
+    if prior and prior.get('tag') == verified['tag'] and prior != verified:
+        raise ValueError('The verification receipt changed for an already pinned tag; refusing a mutable release')
+    expected_lock = {**previous_lock, 'web-blink': verified}
+    readme_path = root / 'README.md'
+    old_readme = readme_path.read_text(encoding='utf-8')
+    new_readme = readme(document, old_readme)
+    changed = plugin_changed or not old_version or previous_lock != expected_lock or old_readme != new_readme
     if changed:
         catalog.write_text(json.dumps(document, indent=2) + '\n', encoding='utf-8')
         lock.write_text(json.dumps(expected_lock, indent=2) + '\n', encoding='utf-8')
-    return {'changed': changed, **verified}
+        readme_path.write_text(new_readme, encoding='utf-8')
+    return {'changed': changed, 'marketplaceVersion': marketplace_version(document), **verified}
 
 
 def main():
@@ -144,7 +166,8 @@ def main():
     print(json.dumps(result))
     if os.environ.get('GITHUB_OUTPUT'):
         with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as output:
-            output.write(f'changed={str(result["changed"]).lower()}\nversion={result["version"]}\n')
+            output.write(f'changed={str(result["changed"]).lower()}\nversion={result["version"]}\n'
+                         f'marketplaceVersion={result["marketplaceVersion"]}\n')
 
 
 if __name__ == '__main__':
