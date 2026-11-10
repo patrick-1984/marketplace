@@ -1,0 +1,52 @@
+name: Sync verified Web Blink release
+on:
+  schedule:
+    - cron: '7,22,37,52 * * * *'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Published stable release tag, or blank for latest'
+        required: false
+        type: string
+permissions:
+  contents: write
+concurrency:
+  group: marketplace-release
+  cancel-in-progress: false
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate release and pin catalog
+        id: release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ inputs.tag }}
+        run: |
+          if [ -n "$RELEASE_TAG" ]; then
+            python scripts/sync_release.py --tag "$RELEASE_TAG"
+          else
+            python scripts/sync_release.py
+          fi
+      - name: Commit verified catalog update
+        if: steps.release.outputs.changed == 'true'
+        env:
+          RELEASE_VERSION: ${{ steps.release.outputs.version }}
+          MARKETPLACE_VERSION: ${{ steps.release.outputs.marketplaceVersion }}
+        run: |
+          python scripts/catalog.py check --base-ref HEAD
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add .claude-plugin/marketplace.json release-lock.json README.md
+          git commit -m "Release marketplace v$MARKETPLACE_VERSION for web-blink v$RELEASE_VERSION"
+          git push
+      - name: Publish or repair the marketplace release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python scripts/publish_marketplace.py

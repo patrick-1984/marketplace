@@ -1,0 +1,41 @@
+name: Publish marketplace release
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.claude-plugin/marketplace.json'
+      - 'README.md'
+      - 'release-lock.json'
+      - 'scripts/catalog.py'
+      - 'scripts/publish_marketplace.py'
+      - '.github/workflows/publish.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: marketplace-release
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m unittest discover -s tests -v
+      - name: Check version policy and final README table
+        env:
+          BASE_REF: ${{ github.event.before }}
+        run: |
+          if [ -n "$BASE_REF" ] && git cat-file -e "$BASE_REF^{commit}" 2>/dev/null; then
+            python scripts/catalog.py check --base-ref "$BASE_REF"
+          else
+            python scripts/catalog.py check
+          fi
+      - name: Publish or repair the marketplace release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python scripts/publish_marketplace.py
