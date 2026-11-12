@@ -8,8 +8,10 @@ import tempfile
 
 if __package__:
     from .catalog import CATALOG, END, START, SEMVER, check, parts, readme, table, version
+    from .commit_catalog import annotated_tag
 else:
     from catalog import CATALOG, END, START, SEMVER, check, parts, readme, table, version
+    from commit_catalog import annotated_tag
 
 REPOSITORY = 'patrick-1984/marketplace'
 
@@ -27,6 +29,7 @@ def check_commit(root, ref, document):
     text = run('git', 'show', commit + ':README.md', root=root).stdout
     if published != document or readme(published, text) != text:
         raise ValueError('Release tag/target does not contain this catalog and its matching final README table')
+    return commit
 
 
 def publish(root):
@@ -51,16 +54,21 @@ def publish(root):
                 raise ValueError('Published marketplace release has no matching source tag')
             return {'tag': tag, 'published': False, 'alreadyPublished': True}
         target = 'refs/tags/' + tag if existing_tag.returncode == 0 else info['targetCommitish']
-        check_commit(root, target, document)
+        commit = check_commit(root, target, document)
     else:
         check_commit(root, 'HEAD', document)
+    if existing_tag.returncode != 0:
+        annotated_tag(root, tag, commit)
+        run('git', 'fetch', '--quiet', 'origin', 'tag', tag, root=root)
+    if release.returncode != 0:
         notes = ('Versioned catalog release. Linked plugin updates bump marketplace patch; adding a plugin bumps minor.\n\n'
                  + table(document).replace(START + '\n', '').replace('\n' + END, '') + '\n')
         with tempfile.TemporaryDirectory(prefix='marketplace-release-notes-') as tmp:
             path = Path(tmp) / 'notes.md'
             path.write_text(notes, encoding='utf-8')
             run('gh', 'release', 'create', tag, '--repo', REPOSITORY, '--target', commit,
-                '--title', 'patrick-1984 marketplace ' + tag, '--notes-file', str(path), '--draft', root=root)
+                '--verify-tag', '--title', 'patrick-1984 marketplace ' + tag,
+                '--notes-file', str(path), '--draft', root=root)
     # Recover a failed prior draft publication; never move latest backwards for a queued older catalog.
     tags = run('git', 'tag', '--list', 'v*', root=root).stdout.splitlines()
     newer = any(t.startswith('v') and SEMVER.fullmatch(t[1:]) and parts(t[1:]) > parts(version(document)) for t in tags)

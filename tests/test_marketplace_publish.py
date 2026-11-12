@@ -5,7 +5,7 @@ import tempfile
 import unittest
 from unittest import mock
 
-from scripts import catalog, publish_marketplace
+from scripts import catalog, commit_catalog, publish_marketplace
 
 
 class MarketplacePublishTests(unittest.TestCase):
@@ -25,6 +25,28 @@ class MarketplacePublishTests(unittest.TestCase):
         self.tag_exists, self.release_exists, self.draft, self.fail_publish = False, False, False, False
         self.calls = []
         self.real_run = publish_marketplace.run
+        api_patch = mock.patch.object(commit_catalog, 'api', side_effect=self.api)
+        api_patch.start()
+        self.addCleanup(api_patch.stop)
+
+    def api(self, root, path, method='GET', data=None):
+        self.calls.append(('api', path, method, data))
+        if path == 'repos/' + commit_catalog.REPOSITORY:
+            return {'full_name': commit_catalog.REPOSITORY,
+                    'owner': {'login': 'patrick-1984', 'id': 235861494}}
+        if path.endswith('/git/tags'):
+            self.assertEqual(data['tagger']['name'], 'patrick-1984')
+            self.assertEqual(data['tagger']['email'], '235861494+patrick-1984@users.noreply.github.com')
+            self.real_run('git', '-c', 'user.name=' + data['tagger']['name'], '-c',
+                          'user.email=' + data['tagger']['email'], 'tag', '-a', data['tag'],
+                          data['object'], '-m', data['message'], root=root)
+            sha = self.real_run('git', 'rev-parse', 'refs/tags/' + data['tag'], root=root).stdout.strip()
+            return {'sha': sha, 'tagger': data['tagger']}
+        if path.endswith('/git/refs'):
+            self.assertEqual(data['ref'], 'refs/tags/v0.1.0')
+            self.tag_exists = True
+            return {}
+        raise AssertionError('Unexpected API call ' + path)
 
     def commit(self):
         subprocess.run(['git', 'add', '.'], cwd=self.root, check=True)
@@ -49,6 +71,7 @@ class MarketplacePublishTests(unittest.TestCase):
             notes = Path(args[args.index('--notes-file') + 1]).read_text()
             self.assertIn('| `web-blink` | 0.11.0 |', notes)
             self.assertIn('--draft', args)
+            self.assertIn('--verify-tag', args)
             return result()
         if args[:3] == ('gh', 'release', 'edit'):
             if self.fail_publish:
@@ -67,6 +90,9 @@ class MarketplacePublishTests(unittest.TestCase):
         self.assertTrue(second['alreadyPublished'])
         self.assertEqual(sum(c[:3] == ('gh', 'release', 'create') for c in self.calls), 1)
         self.assertEqual(sum(c[:3] == ('gh', 'release', 'edit') for c in self.calls), 1)
+        self.assertEqual(sum(c[:3] == ('api', 'repos/' + commit_catalog.REPOSITORY + '/git/tags', 'POST')
+                             for c in self.calls), 1)
+        self.assertEqual(self.real_run('git', 'cat-file', '-t', 'refs/tags/v0.1.0', root=self.root).stdout.strip(), 'tag')
 
     def test_existing_draft_is_recovered_without_a_duplicate_release(self):
         self.fail_publish = True
