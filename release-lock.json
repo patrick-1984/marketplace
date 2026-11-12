@@ -1,8 +1,8 @@
 {
   "web-blink": {
-    "tag": "v0.18.2",
-    "version": "0.18.2",
-    "zipSha256": "fe6c089e1ec6c1d480f38d45843fb7ed7520d435e3a7d5841cf8357f06956cbd",
-    "sourceCommit": "2a42ac5c1583a10239309701c4fc9e76fb3c1e8b"
+    "tag": "v0.19.0",
+    "version": "0.19.0",
+    "zipSha256": "154ae9b270298ca26be8d715194ac48472c20d1fc2e5ef5556e55b38d9d41f8c",
+    "sourceCommit": "4039806c61531898f9aa56a9cf8f29ef395c2021"
   }
 }

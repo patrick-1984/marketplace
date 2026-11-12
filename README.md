@@ -67,9 +67,9 @@ release procedure. The marketplace publish workflow creates a GitHub release/tag
 <!-- BEGIN plugin versions -->
 ## Plugin versions
 
-Marketplace version: **0.1.16**
+Marketplace version: **0.1.17**
 
 | Plugin | Version | Pinned source |
 |---|---|---|
-| `web-blink` | 0.18.2 | [https://github.com/patrick-1984/web-blink](https://github.com/patrick-1984/web-blink) · `v0.18.2` |
+| `web-blink` | 0.19.0 | [https://github.com/patrick-1984/web-blink](https://github.com/patrick-1984/web-blink) · `v0.19.0` |
 <!-- END plugin versions -->
