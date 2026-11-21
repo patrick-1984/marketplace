@@ -4,5 +4,11 @@
     "version": "0.21.0",
     "zipSha256": "bc2859f943b79d7ac8e5f65cab1c12747e561d15c834f73f547531a74ffa4410",
     "sourceCommit": "5ab40622552aa9295128fc1399b85538fb97ca83"
+  },
+  "usb-checker": {
+    "tag": "v0.1.0",
+    "version": "0.1.0",
+    "zipSha256": "ba4bd6d3bd07f54e16d5b861cf5ef7d0facc9f6fcef85a74c8077ac3e47d7bea",
+    "sourceCommit": "e1831e5cc15ab630f778fbada28f6efbde9e7629"
   }
 }
