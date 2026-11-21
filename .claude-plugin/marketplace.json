@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Claude Code plugins by patrick-1984.",
-    "version": "0.3.3"
+    "version": "0.3.4"
   },
   "plugins": [
     {
@@ -51,7 +51,7 @@
       "source": {
         "source": "url",
         "url": "https://github.com/patrick-1984/blink-debugger.git",
-        "ref": "v0.2.0"
+        "ref": "v0.2.1"
       },
       "description": "Inspect local device observation exports and check Linux host readiness and listeners.",
       "homepage": "https://github.com/patrick-1984/blink-debugger",
@@ -62,7 +62,7 @@
         "linux",
         "observations"
       ],
-      "version": "0.2.0"
+      "version": "0.2.1"
     }
   ]
 }
