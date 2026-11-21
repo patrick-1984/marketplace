@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Claude Code plugins by patrick-1984.",
-    "version": "0.3.1"
+    "version": "0.3.2"
   },
   "plugins": [
     {
@@ -14,7 +14,7 @@
       "source": {
         "source": "url",
         "url": "https://github.com/patrick-1984/web-blink.git",
-        "ref": "v0.21.1"
+        "ref": "v0.21.2"
       },
       "description": "It takes just a blink to control the web. Web Blink learns how web services and web apps work, then hands them to you as reviewed, ready-to-run actions, so you can automate your work from Claude Code or the command line (web-blink, or just blink).",
       "homepage": "https://github.com/patrick-1984/web-blink",
@@ -26,14 +26,14 @@
         "cli",
         "integrations"
       ],
-      "version": "0.21.1"
+      "version": "0.21.2"
     },
     {
       "name": "usb-checker",
       "source": {
         "source": "url",
         "url": "https://github.com/patrick-1984/usb-checker.git",
-        "ref": "v0.1.0"
+        "ref": "v0.1.1"
       },
       "description": "Run a direct, read-only USB safety and bounded malware check on a Linux host.",
       "homepage": "https://github.com/patrick-1984/usb-checker",
@@ -44,14 +44,14 @@
         "malware",
         "linux"
       ],
-      "version": "0.1.0"
+      "version": "0.1.1"
     },
     {
       "name": "blink-debugger",
       "source": {
         "source": "url",
         "url": "https://github.com/patrick-1984/blink-debugger.git",
-        "ref": "v0.1.1"
+        "ref": "v0.1.2"
       },
       "description": "Inspect local device observation exports and check Linux host readiness and listeners.",
       "homepage": "https://github.com/patrick-1984/blink-debugger",
@@ -62,7 +62,7 @@
         "linux",
         "observations"
       ],
-      "version": "0.1.1"
+      "version": "0.1.2"
     }
   ]
 }
