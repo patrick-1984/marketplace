@@ -1,9 +1,9 @@
 {
   "web-blink": {
-    "tag": "v0.21.0",
-    "version": "0.21.0",
-    "zipSha256": "bc2859f943b79d7ac8e5f65cab1c12747e561d15c834f73f547531a74ffa4410",
-    "sourceCommit": "5ab40622552aa9295128fc1399b85538fb97ca83"
+    "tag": "v0.21.1",
+    "version": "0.21.1",
+    "zipSha256": "a246cac6fe1852c8b4ffa67838385b7a2b9b4a4fa3de6982e8322cc52b7de5e1",
+    "sourceCommit": "8a21e699fc8878ad9170faea553bf687a36d9e82"
   },
   "usb-checker": {
     "tag": "v0.1.0",
@@ -12,9 +12,9 @@
     "sourceCommit": "e1831e5cc15ab630f778fbada28f6efbde9e7629"
   },
   "blink-debugger": {
-    "tag": "v0.1.0",
-    "version": "0.1.0",
-    "zipSha256": "3923d666b9514dd629cd907fc6dcae9a3dbe053156c329b9f81382a0c1f9d4af",
-    "sourceCommit": "3655b1ebf86d3bc851533617d5010aef61c3c0e8"
+    "tag": "v0.1.1",
+    "version": "0.1.1",
+    "zipSha256": "f99e2f018f176f09b50f36b67ac72d45a8c06dae4a8cff8cca5005eaf6facef2",
+    "sourceCommit": "22e3c1cc4e7e9a7ee3bfb3a13261b244e964e226"
   }
 }

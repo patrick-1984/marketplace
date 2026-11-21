@@ -67,11 +67,11 @@ release procedure. The marketplace publish workflow creates a GitHub release/tag
 <!-- BEGIN plugin versions -->
 ## Plugin versions
 
-Marketplace version: **0.3.0**
+Marketplace version: **0.3.1**
 
 | Plugin | Version | Pinned source |
 |---|---|---|
-| `blink-debugger` | 0.1.0 | [https://github.com/patrick-1984/blink-debugger](https://github.com/patrick-1984/blink-debugger) · `v0.1.0` |
+| `blink-debugger` | 0.1.1 | [https://github.com/patrick-1984/blink-debugger](https://github.com/patrick-1984/blink-debugger) · `v0.1.1` |
 | `usb-checker` | 0.1.0 | [https://github.com/patrick-1984/usb-checker](https://github.com/patrick-1984/usb-checker) · `v0.1.0` |
-| `web-blink` | 0.21.0 | [https://github.com/patrick-1984/web-blink](https://github.com/patrick-1984/web-blink) · `v0.21.0` |
+| `web-blink` | 0.21.1 | [https://github.com/patrick-1984/web-blink](https://github.com/patrick-1984/web-blink) · `v0.21.1` |
 <!-- END plugin versions -->
