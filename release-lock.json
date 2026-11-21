@@ -12,9 +12,9 @@
     "sourceCommit": "75a7e38ecc733ebaeb3c751a9b611a2fac4620b3"
   },
   "blink-debugger": {
-    "tag": "v0.2.0",
-    "version": "0.2.0",
-    "zipSha256": "43ad1d14362ba975ee4516ab0a57c11a6bd0cff40b00e2348c5f2059c3a1cbdb",
-    "sourceCommit": "d94f9dd4c827d432b7401a80c4a17e9175ba1ece"
+    "tag": "v0.2.1",
+    "version": "0.2.1",
+    "zipSha256": "ee66ca5352d1fefcab4acab46fc95abdbe1acf6e4919cb5bd95a5ba7b208a4f8",
+    "sourceCommit": "35d5b3578b1818bdfffb177e70b7807e971c691a"
   }
 }
