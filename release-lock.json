@@ -10,5 +10,11 @@
     "version": "0.1.0",
     "zipSha256": "ba4bd6d3bd07f54e16d5b861cf5ef7d0facc9f6fcef85a74c8077ac3e47d7bea",
     "sourceCommit": "e1831e5cc15ab630f778fbada28f6efbde9e7629"
+  },
+  "blink-debugger": {
+    "tag": "v0.1.0",
+    "version": "0.1.0",
+    "zipSha256": "3923d666b9514dd629cd907fc6dcae9a3dbe053156c329b9f81382a0c1f9d4af",
+    "sourceCommit": "3655b1ebf86d3bc851533617d5010aef61c3c0e8"
   }
 }
