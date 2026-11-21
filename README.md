@@ -1,6 +1,6 @@
 # patrick-1984 Claude Code plugins
 
-A [Claude Code](https://code.claude.com) plugin marketplace. It is a catalog only: each plugin lives in its own
+A plugin marketplace for [Claude Code](https://code.claude.com) and Codex. It is a catalog only: each plugin lives in its own
 repository and is linked from [`.claude-plugin/marketplace.json`](.claude-plugin/marketplace.json).
 
 ## Install
@@ -34,7 +34,9 @@ plugin is installed; a host restart reloads its running component. `blink_doctor
 
 | Plugin | What it does | Source |
 |---|---|---|
-| `web-blink` | It takes just a blink to control the web. Web Blink learns how web services and web apps work, then hands them to you as reviewed, ready-to-run actions, so you can automate your work from Claude Code or the command line (`web-blink`, or just `blink`). | [patrick-1984/web-blink](https://github.com/patrick-1984/web-blink), pinned to a verified release tag in the catalog |
+| `web-blink` | Use reviewed web-service actions from a coding session or the CLI and check compatibility with Blink Debugger. | [Web Blink README](https://github.com/patrick-1984/web-blink) |
+| `blink-debugger` | Check Linux host readiness and summarize saved device observations. | [Blink Debugger workflows](https://github.com/patrick-1984/blink-debugger#common-workflows) |
+| `usb-checker` | Run a guided, direct read-only USB safety check on a prepared Linux host. | [USB Checker installation and workflow](https://github.com/patrick-1984/usb-checker) |
 
 ## Release synchronization
 
@@ -67,11 +69,11 @@ release procedure. The marketplace publish workflow creates a GitHub release/tag
 <!-- BEGIN plugin versions -->
 ## Plugin versions
 
-Marketplace version: **0.3.1**
+Marketplace version: **0.3.2**
 
 | Plugin | Version | Pinned source |
 |---|---|---|
-| `blink-debugger` | 0.1.1 | [https://github.com/patrick-1984/blink-debugger](https://github.com/patrick-1984/blink-debugger) · `v0.1.1` |
-| `usb-checker` | 0.1.0 | [https://github.com/patrick-1984/usb-checker](https://github.com/patrick-1984/usb-checker) · `v0.1.0` |
-| `web-blink` | 0.21.1 | [https://github.com/patrick-1984/web-blink](https://github.com/patrick-1984/web-blink) · `v0.21.1` |
+| `blink-debugger` | 0.1.2 | [https://github.com/patrick-1984/blink-debugger](https://github.com/patrick-1984/blink-debugger) · `v0.1.2` |
+| `usb-checker` | 0.1.1 | [https://github.com/patrick-1984/usb-checker](https://github.com/patrick-1984/usb-checker) · `v0.1.1` |
+| `web-blink` | 0.21.2 | [https://github.com/patrick-1984/web-blink](https://github.com/patrick-1984/web-blink) · `v0.21.2` |
 <!-- END plugin versions -->
