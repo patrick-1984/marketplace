@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Claude Code plugins by patrick-1984.",
-    "version": "0.3.5"
+    "version": "0.4.0"
   },
   "plugins": [
     {
@@ -63,6 +63,26 @@
         "observations"
       ],
       "version": "0.3.0"
+    },
+    {
+      "name": "minion-control",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/patrick-1984/ai-minion-plugin.git",
+        "ref": "v0.1.0"
+      },
+      "description": "Operate Minion from Claude Code: in a master session or a session with grants, see what it can reach, read other sessions, prompt other agents, and allow the Minion commands for master sessions. Ordinary sessions are told nothing.",
+      "homepage": "https://github.com/patrick-1984/ai-minion-plugin",
+      "category": "productivity",
+      "keywords": [
+        "minion",
+        "tmux",
+        "terminal",
+        "sessions",
+        "agents",
+        "remote control"
+      ],
+      "version": "0.1.0"
     }
   ]
 }
