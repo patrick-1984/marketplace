@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Claude Code plugins by patrick-1984.",
-    "version": "0.4.1"
+    "version": "0.4.2"
   },
   "plugins": [
     {
@@ -69,7 +69,7 @@
       "source": {
         "source": "url",
         "url": "https://github.com/patrick-1984/ai-minion-plugin.git",
-        "ref": "v0.1.1"
+        "ref": "v0.2.0"
       },
       "description": "Operate Minion from Claude Code: in a master session or a session with grants, see what it can reach, read other sessions, prompt other agents, and allow the Minion commands for master sessions. Ordinary sessions are told nothing.",
       "homepage": "https://github.com/patrick-1984/ai-minion-plugin",
@@ -82,7 +82,7 @@
         "agents",
         "remote control"
       ],
-      "version": "0.1.1"
+      "version": "0.2.0"
     }
   ]
 }
